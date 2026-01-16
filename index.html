@@ -1,8 +1,10 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prompt Builder Master v1.2 (Public)</title>
+  <title>Prompt Builder Master — Industrial Mode</title>
+  <meta name="description" content="Personal prompt builder industrial untuk image-to-video AI dengan struktur terkunci dan hasil konsisten." />
   <style>
     body{margin:0;font-family:system-ui,sans-serif;background:#0f0f12;color:#f5f5f5}
     header{padding:16px;text-align:center;background:#151520;font-weight:700}
@@ -10,135 +12,141 @@
     .card{background:#1b1b28;border-radius:14px;padding:12px}
     h3{margin:0 0 8px;font-size:14px;color:#9aa4ff}
     select,textarea{width:100%;background:#0f0f12;color:#fff;border:1px solid #2a2a3d;border-radius:10px;padding:10px;font-size:14px}
-    textarea{min-height:60px}
+    textarea{min-height:70px}
     .checkbox-group label{display:block;font-size:13px;margin-bottom:8px}
-    button{width:100%;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#6a6cff,#9aa4ff);color:#000;font-weight:700;font-size:16px;cursor:pointer}
-    .secondary{background:#2a2a3d;color:#fff;margin-top:6px}
+    button{width:100%;padding:14px;border-radius:14px;border:none;font-weight:700;font-size:15px;cursor:pointer}
+    .primary{background:linear-gradient(135deg,#6a6cff,#9aa4ff);color:#000}
+    .secondary{background:#2a2a3d;color:#fff}
     .output{white-space:pre-wrap;font-size:13px;line-height:1.5;background:#0b0b10;border-radius:14px;padding:12px;border:1px dashed #2a2a3d}
-    .warning{color:#ffb347;font-size:13px;margin-top:6px}
+    footer{text-align:center;font-size:12px;opacity:.45;padding:12px}
   </style>
 </head>
 <body>
-<header>Prompt Builder Master v1.2 (Public)</header>
-<div class="container"><div class="card"><h3>1. Subjek Utama (Wajib)</h3><textarea id="subjek" placeholder="makhluk humanoid kecil seukuran anak..."></textarea><div id="warn" class="warning"></div></div><div class="card"><h3>2. Lingkungan & Ruang</h3><select id="lingkungan"><option>lubang tanah sempit dan lembap</option><option>hutan gelap malam hari</option><option>ruangan tua terbengkalai</option><option>gang sempit bercahaya redup</option><option>atap bangunan tua saat malam</option></select></div><div class="card"><h3>3. Posisi Awal</h3><select id="pose"><option>berjongkok dan diam</option><option>tersembunyi sebagian</option><option>duduk meringkuk</option><option>berdiri setengah tubuh</option></select></div><div class="card"><h3>4. Kondisi Awal</h3><select id="state"><option>diam dan waspada</option><option>tenang namun curiga</option><option>takut dan ragu</option></select></div><div class="card"><h3>5. Gerakan Bertahap (Multi‑Select)</h3><div class="checkbox-group">
+
+<header>Prompt Builder Master — Industrial Mode</header>
+
+<div class="container">
+
+<div class="card">
+<h3>Subjek Utama</h3>
+<textarea id="subjek"></textarea>
+</div>
+
+<div class="card">
+<h3>Dunia</h3>
+<select id="lingkungan">
+<option>lorong bawah tanah sempit dengan dinding lembap</option>
+<option>ruang penyimpanan kecil tanpa jendela, cahaya bocor dari celah</option>
+<option>kolong bangunan tua dengan pilar rapat dan bayangan gelap</option>
+</select>
+</div>
+
+<div class="card">
+<h3>Emosi</h3>
+<select id="state">
+<option>takut dan ragu</option>
+<option>kasihan dan empati lembut</option>
+<option>takut dan penasaran tertahan</option>
+</select>
+</div>
+
+<div class="card">
+<h3>Gerakan Mikro</h3>
+<div class="checkbox-group">
 <label><input type="checkbox" value="perlahan mengangkat kepala"> perlahan mengangkat kepala</label>
 <label><input type="checkbox" value="mata berkedip secara alami"> mata berkedip secara alami</label>
-<label><input type="checkbox" value="melihat sekeliling dengan hati-hati"> melihat sekeliling dengan hati-hati</label>
-<label><input type="checkbox" value="bergerak maju sedikit"> bergerak maju sedikit</label>
 <label><input type="checkbox" value="menarik napas pelan"> menarik napas pelan</label>
-<label><input type="checkbox" value="memiringkan kepala sedikit"> memiringkan kepala sedikit</label>
+<label><input type="checkbox" value="jari bergerak sedikit seolah ragu"> jari bergerak sedikit seolah ragu</label>
+<label><input type="checkbox" value="kepala menunduk perlahan lalu diam"> kepala menunduk perlahan lalu diam</label>
 <label><input type="checkbox" value="mundur perlahan"> mundur perlahan</label>
-</div></div><div class="card"><h3>6. Detail Mikro</h3><select id="detail"><option>napas halus terlihat</option><option>tubuh sedikit gemetar</option><option>mata mengikuti sumber cahaya</option><option>refleksi cahaya kecil di mata</option><option>debu halus bergerak di udara</option></select></div><div class="card"><h3>7. Kamera</h3><select id="kamera"><option>kamera close-up bergerak mendekat perlahan</option><option>kamera handheld stabil</option><option>kamera statis dengan framing ketat</option></select></div><div class="card"><h3>8. Gaya Visual</h3><select id="visual"><option>pencahayaan sinematik realistis</option><option>gelap misterius dengan bayangan lembut</option><option>natural malam hari</option></select></div><div class="card"><h3>9. Durasi & Tempo</h3><select id="durasi"><option>durasi 8 detik, tempo alami</option><option>durasi 6 detik, tempo lambat</option><option>durasi 10 detik, tempo terkontrol</option></select></div><button onclick="generatePrompt()">Generate Prompt</button> <button class="secondary" onclick="copyPrompt()">📋 Salin Prompt</button> <button class="secondary" onclick="enableIndustrialMode()">🔒 Industrial Mode ON</button> <button class="secondary" onclick="copyPrompt()">📋 Salin Prompt</button>
+</div>
+</div>
 
-<div class="card"><h3>🧠 Analisis & Rekomendasi Sistem</h3><div class="output" id="analysis"></div></div>
-<div class="card"><h3>Prompt Final (Terkunci)</h3><div class="output" id="output"></div></div>
-</div><script>
-function generatePrompt(){
- const subjekVal=subjek.value.trim();
- if(!subjekVal){warn.innerText='Subjek utama wajib diisi';return}else{warn.innerText=''}
- let gerakan=[...document.querySelectorAll('input[type=checkbox]:checked')].map(cb=>cb.value);
- if(gerakan.length===0){gerakan=['tetap diam dengan gerakan sangat minimal']}
- const text=`${subjekVal},\nberada di ${lingkungan.value}.\n\nDalam posisi ${pose.value}, dengan kondisi ${state.value}.\nIa ${gerakan.join(', ')}. ${detail.value}.\n\n${kamera.value}. ${visual.value}.\n${durasi.value}.\n\nDi akhir, subjek perlahan mundur dan menghilang kembali.\nTanpa gerakan tiba-tiba, tanpa animasi berlebihan, tanpa distorsi, tanpa efek kartun.`;
- output.innerText=text;
-}
-function copyPrompt(){
- if(!output.innerText)return;
- navigator.clipboard.writeText(output.innerText);
- alert('Prompt tersalin');
-}
+<div class="card">
+<h3>Durasi</h3>
+<select id="durasi">
+<option>durasi 6–8 detik, tempo lambat dan terkontrol</option>
+</select>
+</div>
 
-// === REKOMENDASI INDUSTRIAL RESMI ===
-const rekomendasi = {
-  dunia:[
-    "lorong bawah tanah sempit dengan dinding lembap",
-    "ruang penyimpanan kecil tanpa jendela, cahaya bocor dari celah",
-    "kolong bangunan tua dengan pilar rapat dan bayangan gelap"
-  ],
-  emosi:[
-    "takut dan ragu",
-    "kasihan dan empati lembut",
-    "takut dan penasaran tertahan"
-  ],
-  gerakan:[
-    "jari bergerak sedikit seolah ragu",
-    "kepala menunduk perlahan lalu diam",
-    "mata mengikuti bayangan kecil di sekitar"
-  ],
-  ending:[
-    "kamera berhenti saat subjek masuk kembali ke bayangan awal",
-    "subjek memudar ke gelap karena cahaya redup",
-    "gerakan berhenti total dengan posisi identik frame pertama"
-  ]
-};
+<button class="primary" onclick="generatePrompt()">Generate Prompt</button>
+<button class="secondary" onclick="copyPrompt()">Salin Prompt</button>
 
-function applyIndustrialRecommendations(){
-  lingkungan.value = rekomendasi.dunia[0];
-  state.value = rekomendasi.emosi[0];
-  detail.value = "napas halus terlihat";
+<div class="card">
+<h3>Analisis Sistem</h3>
+<div class="output" id="analysis"></div>
+</div>
 
-  document.querySelectorAll('input[type=checkbox]').forEach(cb=>{
-    if(rekomendasi.gerakan.includes(cb.value)) cb.checked=true;
-  });
-}
+<div class="card">
+<h3>Prompt Final (Terkunci)</h3>
+<div class="output" id="output"></div>
+</div>
 
-function healthCheck(){
-  let score = 100;
-  const checked = document.querySelectorAll('input[type=checkbox]:checked').length;
-  if(checked > 5) score -= 20;
-  if(!subjek.value.trim()) score -= 30;
+</div>
 
-  if(score >= 80) return "✔ Prompt stabil & industrial-ready";
-  if(score >= 50) return "⚠ Prompt masih bisa distabilkan";
-  return "❌ Prompt berisiko tidak realistis";
-}
+<footer>v1.0 — personal industrial build</footer>
 
-const oldGenerate = generatePrompt;
-generatePrompt = function(){
-  oldGenerate();
-  output.innerText += "
-
-" + healthCheck();
-}
-
-
-let industrialMode=false;
+<script>
+let industrialMode = true;
 
 function enableIndustrialMode(){
-  industrialMode=true;
-  applyIndustrialRecommendations();
-
-  // Lock critical fields
-  lingkungan.disabled=true;
-  state.disabled=true;
-  durasi.disabled=true;
+  subjek.value =
+  "Tuyul kecil realistis dengan ekspresi hidup berhadapan dengan wanita muda Asia usia 21 tahun, wajah lembut, reaksi manusiawi alami";
 
   document.querySelectorAll('input[type=checkbox]').forEach(cb=>{
-    if(!cb.checked) cb.disabled=true;
+    cb.checked = [
+      "perlahan mengangkat kepala",
+      "mata berkedip secara alami",
+      "menarik napas pelan",
+      "mundur perlahan"
+    ].includes(cb.value);
+    if(!cb.checked) cb.disabled = true;
   });
 
-  analysis.innerText=
-  "Industrial Mode aktif.
-"+
-  "• Dunia dikunci untuk menjaga ruang sempit & gelap
-"+
-  "• Emosi dibatasi agar tetap takut & kasihan
-"+
-  "• Gerakan dipilih mikro untuk stabilitas
-"+
-  "• Ending dijaga agar loop sempurna";
+  lingkungan.disabled = true;
+  state.disabled = true;
+  durasi.disabled = true;
 
-  generatePrompt();
+  analysis.innerText =
+  "Industrial Mode aktif.\n" +
+  "• Dunia sempit & gelap dikunci\n" +
+  "• Emosi dibatasi (takut + kasihan)\n" +
+  "• Gerakan mikro untuk stabilitas\n" +
+  "• Ending loop aman";
 }
 
-const oldGenerate2 = generatePrompt;
-generatePrompt = function(){
-  oldGenerate2();
-  if(industrialMode){
-    analysis.innerText += "
+function generatePrompt(){
+  const gerakan = [...document.querySelectorAll('input[type=checkbox]:checked')]
+    .map(cb=>cb.value).join(", ");
 
-✔ Struktur inti aman & konsisten";
-  }
+  const text =
+`${subjek.value}
+berada di ${lingkungan.value}.
+
+Emosi utama: ${state.value}.
+Gerakan mikro: ${gerakan}.
+
+Durasi: ${durasi.value}.
+
+Di akhir, subjek perlahan mundur kembali ke posisi awal,
+menghilang ke kegelapan dengan frame akhir selaras dengan awal
+untuk loop sempurna.
+
+Tanpa gerakan tiba-tiba.
+Tanpa efek kartun.
+Tanpa distorsi tubuh.`;
+
+  output.innerText = text;
+  analysis.innerText += "\n\n✔ Struktur aman & siap produksi";
 }
 
-</script></body>
+function copyPrompt(){
+  if(!output.innerText) return;
+  navigator.clipboard.writeText(output.innerText);
+}
+
+window.onload = enableIndustrialMode;
+</script>
+
+</body>
   </html>
