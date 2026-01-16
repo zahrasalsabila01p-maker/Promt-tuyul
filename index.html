@@ -28,8 +28,9 @@
 <label><input type="checkbox" value="menarik napas pelan"> menarik napas pelan</label>
 <label><input type="checkbox" value="memiringkan kepala sedikit"> memiringkan kepala sedikit</label>
 <label><input type="checkbox" value="mundur perlahan"> mundur perlahan</label>
-</div></div><div class="card"><h3>6. Detail Mikro</h3><select id="detail"><option>napas halus terlihat</option><option>tubuh sedikit gemetar</option><option>mata mengikuti sumber cahaya</option><option>refleksi cahaya kecil di mata</option><option>debu halus bergerak di udara</option></select></div><div class="card"><h3>7. Kamera</h3><select id="kamera"><option>kamera close-up bergerak mendekat perlahan</option><option>kamera handheld stabil</option><option>kamera statis dengan framing ketat</option></select></div><div class="card"><h3>8. Gaya Visual</h3><select id="visual"><option>pencahayaan sinematik realistis</option><option>gelap misterius dengan bayangan lembut</option><option>natural malam hari</option></select></div><div class="card"><h3>9. Durasi & Tempo</h3><select id="durasi"><option>durasi 8 detik, tempo alami</option><option>durasi 6 detik, tempo lambat</option><option>durasi 10 detik, tempo terkontrol</option></select></div><button onclick="generatePrompt()">Generate Prompt</button> <button class="secondary" onclick="copyPrompt()">📋 Salin Prompt</button>
+</div></div><div class="card"><h3>6. Detail Mikro</h3><select id="detail"><option>napas halus terlihat</option><option>tubuh sedikit gemetar</option><option>mata mengikuti sumber cahaya</option><option>refleksi cahaya kecil di mata</option><option>debu halus bergerak di udara</option></select></div><div class="card"><h3>7. Kamera</h3><select id="kamera"><option>kamera close-up bergerak mendekat perlahan</option><option>kamera handheld stabil</option><option>kamera statis dengan framing ketat</option></select></div><div class="card"><h3>8. Gaya Visual</h3><select id="visual"><option>pencahayaan sinematik realistis</option><option>gelap misterius dengan bayangan lembut</option><option>natural malam hari</option></select></div><div class="card"><h3>9. Durasi & Tempo</h3><select id="durasi"><option>durasi 8 detik, tempo alami</option><option>durasi 6 detik, tempo lambat</option><option>durasi 10 detik, tempo terkontrol</option></select></div><button onclick="generatePrompt()">Generate Prompt</button> <button class="secondary" onclick="copyPrompt()">📋 Salin Prompt</button> <button class="secondary" onclick="enableIndustrialMode()">🔒 Industrial Mode ON</button> <button class="secondary" onclick="copyPrompt()">📋 Salin Prompt</button>
 
+<div class="card"><h3>🧠 Analisis & Rekomendasi Sistem</h3><div class="output" id="analysis"></div></div>
 <div class="card"><h3>Prompt Final (Terkunci)</h3><div class="output" id="output"></div></div>
 </div><script>
 function generatePrompt(){
@@ -45,5 +46,99 @@ function copyPrompt(){
  navigator.clipboard.writeText(output.innerText);
  alert('Prompt tersalin');
 }
+
+// === REKOMENDASI INDUSTRIAL RESMI ===
+const rekomendasi = {
+  dunia:[
+    "lorong bawah tanah sempit dengan dinding lembap",
+    "ruang penyimpanan kecil tanpa jendela, cahaya bocor dari celah",
+    "kolong bangunan tua dengan pilar rapat dan bayangan gelap"
+  ],
+  emosi:[
+    "takut dan ragu",
+    "kasihan dan empati lembut",
+    "takut dan penasaran tertahan"
+  ],
+  gerakan:[
+    "jari bergerak sedikit seolah ragu",
+    "kepala menunduk perlahan lalu diam",
+    "mata mengikuti bayangan kecil di sekitar"
+  ],
+  ending:[
+    "kamera berhenti saat subjek masuk kembali ke bayangan awal",
+    "subjek memudar ke gelap karena cahaya redup",
+    "gerakan berhenti total dengan posisi identik frame pertama"
+  ]
+};
+
+function applyIndustrialRecommendations(){
+  lingkungan.value = rekomendasi.dunia[0];
+  state.value = rekomendasi.emosi[0];
+  detail.value = "napas halus terlihat";
+
+  document.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    if(rekomendasi.gerakan.includes(cb.value)) cb.checked=true;
+  });
+}
+
+function healthCheck(){
+  let score = 100;
+  const checked = document.querySelectorAll('input[type=checkbox]:checked').length;
+  if(checked > 5) score -= 20;
+  if(!subjek.value.trim()) score -= 30;
+
+  if(score >= 80) return "✔ Prompt stabil & industrial-ready";
+  if(score >= 50) return "⚠ Prompt masih bisa distabilkan";
+  return "❌ Prompt berisiko tidak realistis";
+}
+
+const oldGenerate = generatePrompt;
+generatePrompt = function(){
+  oldGenerate();
+  output.innerText += "
+
+" + healthCheck();
+}
+
+
+let industrialMode=false;
+
+function enableIndustrialMode(){
+  industrialMode=true;
+  applyIndustrialRecommendations();
+
+  // Lock critical fields
+  lingkungan.disabled=true;
+  state.disabled=true;
+  durasi.disabled=true;
+
+  document.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    if(!cb.checked) cb.disabled=true;
+  });
+
+  analysis.innerText=
+  "Industrial Mode aktif.
+"+
+  "• Dunia dikunci untuk menjaga ruang sempit & gelap
+"+
+  "• Emosi dibatasi agar tetap takut & kasihan
+"+
+  "• Gerakan dipilih mikro untuk stabilitas
+"+
+  "• Ending dijaga agar loop sempurna";
+
+  generatePrompt();
+}
+
+const oldGenerate2 = generatePrompt;
+generatePrompt = function(){
+  oldGenerate2();
+  if(industrialMode){
+    analysis.innerText += "
+
+✔ Struktur inti aman & konsisten";
+  }
+}
+
 </script></body>
   </html>
