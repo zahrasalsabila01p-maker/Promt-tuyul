@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prompt Builder Master — Industrial Mode</title>
-  <meta name="description" content="Personal prompt builder industrial untuk image-to-video AI dengan struktur terkunci dan hasil konsisten." />
+  <title>Prompt Builder Master — Industrial Flexible</title>
+  <meta name="description" content="Personal prompt builder industrial dengan preset otomatis dan kontrol fleksibel." />
   <style>
     body{margin:0;font-family:system-ui,sans-serif;background:#0f0f12;color:#f5f5f5}
     header{padding:16px;text-align:center;background:#151520;font-weight:700}
@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<header>Prompt Builder Master — Industrial Mode</header>
+<header>Prompt Builder Master — Industrial Flexible</header>
 
 <div class="container">
 
@@ -66,6 +66,8 @@
 <h3>Durasi</h3>
 <select id="durasi">
 <option>durasi 6–8 detik, tempo lambat dan terkontrol</option>
+<option>durasi 6 detik, tempo sangat halus</option>
+<option>durasi 8 detik, tempo natural</option>
 </select>
 </div>
 
@@ -73,25 +75,22 @@
 <button class="secondary" onclick="copyPrompt()">Salin Prompt</button>
 
 <div class="card">
-<h3>Analisis Sistem</h3>
-<div class="output" id="analysis"></div>
-</div>
-
-<div class="card">
-<h3>Prompt Final (Terkunci)</h3>
+<h3>Prompt Final</h3>
 <div class="output" id="output"></div>
 </div>
 
 </div>
 
-<footer>v1.0 — personal industrial build</footer>
+<footer>v1.1 — industrial flexible build</footer>
 
 <script>
-let industrialMode = true;
-
-function enableIndustrialMode(){
+function enablePreset(){
   subjek.value =
   "Tuyul kecil realistis dengan ekspresi hidup berhadapan dengan wanita muda Asia usia 21 tahun, wajah lembut, reaksi manusiawi alami";
+
+  lingkungan.selectedIndex = 0;
+  state.selectedIndex = 0;
+  durasi.selectedIndex = 0;
 
   document.querySelectorAll('input[type=checkbox]').forEach(cb=>{
     cb.checked = [
@@ -100,19 +99,7 @@ function enableIndustrialMode(){
       "menarik napas pelan",
       "mundur perlahan"
     ].includes(cb.value);
-    if(!cb.checked) cb.disabled = true;
   });
-
-  lingkungan.disabled = true;
-  state.disabled = true;
-  durasi.disabled = true;
-
-  analysis.innerText =
-  "Industrial Mode aktif.\n" +
-  "• Dunia sempit & gelap dikunci\n" +
-  "• Emosi dibatasi (takut + kasihan)\n" +
-  "• Gerakan mikro untuk stabilitas\n" +
-  "• Ending loop aman";
 }
 
 function generatePrompt(){
@@ -137,7 +124,6 @@ Tanpa efek kartun.
 Tanpa distorsi tubuh.`;
 
   output.innerText = text;
-  analysis.innerText += "\n\n✔ Struktur aman & siap produksi";
 }
 
 function copyPrompt(){
@@ -145,8 +131,8 @@ function copyPrompt(){
   navigator.clipboard.writeText(output.innerText);
 }
 
-window.onload = enableIndustrialMode;
+window.onload = enablePreset;
 </script>
 
 </body>
-  </html>
+</html>
