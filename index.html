@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Builder Master v1.2 (Public)</title>
+  <style>
+    body{margin:0;font-family:system-ui,sans-serif;background:#0f0f12;color:#f5f5f5}
+    header{padding:16px;text-align:center;background:#151520;font-weight:700}
+    .container{padding:12px;display:grid;gap:12px}
+    .card{background:#1b1b28;border-radius:14px;padding:12px}
+    h3{margin:0 0 8px;font-size:14px;color:#9aa4ff}
+    select,textarea{width:100%;background:#0f0f12;color:#fff;border:1px solid #2a2a3d;border-radius:10px;padding:10px;font-size:14px}
+    textarea{min-height:60px}
+    .checkbox-group label{display:block;font-size:13px;margin-bottom:8px}
+    button{width:100%;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#6a6cff,#9aa4ff);color:#000;font-weight:700;font-size:16px;cursor:pointer}
+    .secondary{background:#2a2a3d;color:#fff;margin-top:6px}
+    .output{white-space:pre-wrap;font-size:13px;line-height:1.5;background:#0b0b10;border-radius:14px;padding:12px;border:1px dashed #2a2a3d}
+    .warning{color:#ffb347;font-size:13px;margin-top:6px}
+  </style>
+</head>
+<body>
+<header>Prompt Builder Master v1.2 (Public)</header>
+<div class="container"><div class="card"><h3>1. Subjek Utama (Wajib)</h3><textarea id="subjek" placeholder="makhluk humanoid kecil seukuran anak..."></textarea><div id="warn" class="warning"></div></div><div class="card"><h3>2. Lingkungan & Ruang</h3><select id="lingkungan"><option>lubang tanah sempit dan lembap</option><option>hutan gelap malam hari</option><option>ruangan tua terbengkalai</option><option>gang sempit bercahaya redup</option><option>atap bangunan tua saat malam</option></select></div><div class="card"><h3>3. Posisi Awal</h3><select id="pose"><option>berjongkok dan diam</option><option>tersembunyi sebagian</option><option>duduk meringkuk</option><option>berdiri setengah tubuh</option></select></div><div class="card"><h3>4. Kondisi Awal</h3><select id="state"><option>diam dan waspada</option><option>tenang namun curiga</option><option>takut dan ragu</option></select></div><div class="card"><h3>5. Gerakan Bertahap (Multi‑Select)</h3><div class="checkbox-group">
+<label><input type="checkbox" value="perlahan mengangkat kepala"> perlahan mengangkat kepala</label>
+<label><input type="checkbox" value="mata berkedip secara alami"> mata berkedip secara alami</label>
+<label><input type="checkbox" value="melihat sekeliling dengan hati-hati"> melihat sekeliling dengan hati-hati</label>
+<label><input type="checkbox" value="bergerak maju sedikit"> bergerak maju sedikit</label>
+<label><input type="checkbox" value="menarik napas pelan"> menarik napas pelan</label>
+<label><input type="checkbox" value="memiringkan kepala sedikit"> memiringkan kepala sedikit</label>
+<label><input type="checkbox" value="mundur perlahan"> mundur perlahan</label>
+</div></div><div class="card"><h3>6. Detail Mikro</h3><select id="detail"><option>napas halus terlihat</option><option>tubuh sedikit gemetar</option><option>mata mengikuti sumber cahaya</option><option>refleksi cahaya kecil di mata</option><option>debu halus bergerak di udara</option></select></div><div class="card"><h3>7. Kamera</h3><select id="kamera"><option>kamera close-up bergerak mendekat perlahan</option><option>kamera handheld stabil</option><option>kamera statis dengan framing ketat</option></select></div><div class="card"><h3>8. Gaya Visual</h3><select id="visual"><option>pencahayaan sinematik realistis</option><option>gelap misterius dengan bayangan lembut</option><option>natural malam hari</option></select></div><div class="card"><h3>9. Durasi & Tempo</h3><select id="durasi"><option>durasi 8 detik, tempo alami</option><option>durasi 6 detik, tempo lambat</option><option>durasi 10 detik, tempo terkontrol</option></select></div><button onclick="generatePrompt()">Generate Prompt</button> <button class="secondary" onclick="copyPrompt()">📋 Salin Prompt</button>
+
+<div class="card"><h3>Prompt Final (Terkunci)</h3><div class="output" id="output"></div></div>
+</div><script>
+function generatePrompt(){
+ const subjekVal=subjek.value.trim();
+ if(!subjekVal){warn.innerText='Subjek utama wajib diisi';return}else{warn.innerText=''}
+ let gerakan=[...document.querySelectorAll('input[type=checkbox]:checked')].map(cb=>cb.value);
+ if(gerakan.length===0){gerakan=['tetap diam dengan gerakan sangat minimal']}
+ const text=`${subjekVal},\nberada di ${lingkungan.value}.\n\nDalam posisi ${pose.value}, dengan kondisi ${state.value}.\nIa ${gerakan.join(', ')}. ${detail.value}.\n\n${kamera.value}. ${visual.value}.\n${durasi.value}.\n\nDi akhir, subjek perlahan mundur dan menghilang kembali.\nTanpa gerakan tiba-tiba, tanpa animasi berlebihan, tanpa distorsi, tanpa efek kartun.`;
+ output.innerText=text;
+}
+function copyPrompt(){
+ if(!output.innerText)return;
+ navigator.clipboard.writeText(output.innerText);
+ alert('Prompt tersalin');
+}
+</script></body>
+  </html>
