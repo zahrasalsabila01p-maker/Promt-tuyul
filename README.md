@@ -1,73 +1,95 @@
-# Prompt Builder Master (Mobile-First)
+# Prompt Builder Master — Industrial Mode
 
-Prompt Builder Master adalah web tool ringan berbasis HTML + JavaScript
-untuk menyusun **prompt visual & video AI yang realistis, terstruktur,
-dan aman digunakan**.
+Prompt Builder Master adalah web tool pribadi berbasis HTML dan JavaScript
+yang digunakan untuk menyusun prompt image-to-video AI secara konsisten,
+realistis, dan terkendali.
 
-Dirancang khusus untuk:
-- Creator konten (TikTok / Reels / Shorts)
-- Prompt engineer pemula hingga advanced
-- Eksperimen image-to-image & image-to-video
+Tool ini dirancang sebagai alat produksi pribadi, bukan produk publik,
+dengan fokus pada stabilitas hasil dan disiplin struktur prompt.
 
 ---
 
-## ✨ Fitur Utama
+## Tujuan Penggunaan
 
-- 📱 **Mobile-First Design** (optimal di HP)
-- 🧱 Template prompt **terkunci & aman**
-- 🧠 Multi-select gerakan bertahap (lebih realistis)
-- 🎥 Kontrol kamera, visual, tempo, dan detail mikro
-- 🚫 Anti gerakan kasar & animasi berlebihan
-- 📋 Salin prompt sekali klik
-- ⚡ Tanpa framework, super ringan
-
----
-
-## 🧩 Struktur Prompt
-
-Prompt dibangun dari 9 lapisan utama:
-1. Subjek utama *(wajib)*
-2. Lingkungan & ruang
-3. Posisi awal
-4. Kondisi emosional
-5. Gerakan bertahap (multi-select)
-6. Detail mikro (realism booster)
-7. Kamera
-8. Gaya visual
-9. Durasi & tempo
-
-Setiap prompt memiliki **ending & batasan otomatis**
-agar hasil tetap stabil dan natural.
+Tool ini digunakan untuk:
+- Menjaga konsistensi karakter lintas video
+- Menghindari prompt liar atau tidak realistis
+- Mempercepat proses pembuatan prompt
+- Menjaga emosi, dunia, dan gerakan tetap terkendali
+- Menghasilkan video pendek yang aman untuk loop
 
 ---
 
-## 🚀 Cara Menggunakan
+## Struktur Prompt Inti (Terkunci)
 
-1. Isi **Subjek Utama**
-2. Pilih opsi di setiap bagian
-3. Klik **Generate Prompt**
-4. Klik **Salin Prompt**
-5. Gunakan di AI image/video generator favoritmu
+Setiap prompt selalu mengikuti struktur berikut:
+
+- **Karakter konsisten**  
+  Tuyul dan wanita muda Asia usia 21 tahun
+
+- **Dunia**  
+  Ruang sempit, gelap, dan tertutup
+
+- **Emosi utama**  
+  Takut dan kasihan (maksimal dua emosi)
+
+- **Gerakan**  
+  Mikro, bertahap, dan realistis
+
+- **Durasi**  
+  6–8 detik, tempo lambat dan terkontrol
+
+- **Ending**  
+  Loop sempurna (frame akhir selaras dengan frame awal)
+
+Struktur ini sengaja dikunci untuk menjaga kualitas hasil.
 
 ---
 
-## 🛠 Teknologi
+## Fitur Inti
+
+- Antarmuka mobile-first
+- Preset industrial otomatis
+- Multi-select gerakan mikro
+- Validator stabilitas prompt
+- Panel analisis dan rekomendasi sistem
+- Industrial Mode (pengunci struktur inti)
+- Salin prompt sekali klik
+- Tanpa backend, tanpa API, tanpa framework
+
+---
+
+## Cara Pakai Singkat
+
+1. Buka web
+2. Industrial Mode aktif secara default
+3. Sesuaikan detail minor jika diperlukan
+4. Klik **Generate Prompt**
+5. Salin dan gunakan prompt
+
+---
+
+## Catatan Penting
+
+- Tool ini bukan AI generator
+- Tidak melakukan inferensi atau pemrosesan AI
+- Semua kecerdasan bersifat rule-based
+- Dirancang untuk konsistensi, bukan eksplorasi bebas
+- Digunakan untuk kebutuhan pribadi
+
+---
+
+## Teknologi
 
 - HTML5
 - CSS (mobile-first)
 - Vanilla JavaScript
-- Hosting: GitHub Pages / Vercel
+- Hosting: Vercel
 
 ---
 
-## 📌 Catatan
+## Status Project
 
-Tool ini **bukan generator otomatis AI**  
-melainkan **prompt builder** untuk membantu kreativitas
-tanpa merusak struktur prompt.
-
----
-
-## 📄 Lisensi
-
-Bebas digunakan untuk personal & eksperimen.
+- **Tipe:** Personal / Private Tool  
+- **Status:** Aktif digunakan  
+- **Fokus:** Stabilitas dan produksi konten berulang
